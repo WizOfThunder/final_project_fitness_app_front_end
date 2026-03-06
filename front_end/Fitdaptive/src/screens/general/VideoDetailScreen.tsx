@@ -1,15 +1,24 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
-export default function VideoDetailScreen() {
+export default function VideoDetailScreen({route}: any) {
+  const video = route?.params?.video || {id: 'dQw4w9WgXcQ', title: 'Sample Workout Video', description: 'This is a sample workout video.'};
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Video Detail Screen</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <YoutubePlayer height={220} videoId={video.id} />
+      <View style={styles.content}>
+        <Text style={styles.title}>{video.title}</Text>
+        <Text style={styles.description}>{video.description}</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff'},
-  text: {fontSize: 24, fontWeight: '600'},
+  container: {flex: 1, backgroundColor: '#fff'},
+  content: {padding: 20},
+  title: {fontSize: 24, fontWeight: 'bold', marginBottom: 15},
+  description: {fontSize: 16, lineHeight: 24, color: '#666'},
 });

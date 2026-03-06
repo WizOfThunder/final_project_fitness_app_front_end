@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+
+const ACHIEVEMENTS = [
+  {id: '1', title: 'First Workout'},
+  {id: '2', title: '7 Day Streak'},
+  {id: '3', title: '100 Push-ups'},
+];
 
 export default function ProfileScreen({navigation}: any) {
   const handleLogout = () => {
@@ -7,16 +13,30 @@ export default function ProfileScreen({navigation}: any) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.value}>user@test.com</Text>
       </View>
+      
+      <Text style={styles.sectionTitle}>Achievements</Text>
+      <View style={styles.achievementRow}>
+        {ACHIEVEMENTS.map(a => (
+          <View key={a.id} style={styles.achievementItem}>
+            <View style={styles.achievementBox} />
+            <Text style={styles.achievementTitle}>{a.title}</Text>
+          </View>
+        ))}
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Achievement')}>
+        <Text style={styles.seeMore}>See More</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -42,6 +62,37 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 18,
     fontWeight: '500',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 20,
+    marginBottom: 15,
+  },
+  achievementRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  achievementItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  achievementBox: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#FFD700',
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  achievementTitle: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  seeMore: {
+    color: '#007AFF',
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 16,
   },
   logoutButton: {
     backgroundColor: '#FF3B30',
