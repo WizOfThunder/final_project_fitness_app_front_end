@@ -208,9 +208,8 @@ export default function ChallengeDetailScreen({route, navigation}: any) {
   // For online/offline: can submit only after end_date AND event_end_time
   const canSubmitTimed = (() => {
     if (isAuto) return true;
-    if (!isEnded && !isActive) return false; // upcoming, can't submit
-    if (isActive) return false; // event still running
-    // ended date — check time if set
+    if (!isEnded && !isActive) return false;
+    if (isActive) return false;
     if (!challenge.event_end_time) return true;
     const now = new Date();
     const [endH, endM] = challenge.event_end_time.split(':').map(Number);
@@ -223,7 +222,6 @@ export default function ChallengeDetailScreen({route, navigation}: any) {
     if (challenge.created_by === user?.id) return null;
     if (isEnded && !joined) return null; // ended and never joined
 
-    // Not joined yet — can join if upcoming or active (auto), but not if online/offline has started
     if (!joined) {
       if (!isAuto && isActive) {
         return (
@@ -247,7 +245,6 @@ export default function ChallengeDetailScreen({route, navigation}: any) {
 
     if (isCompleted) return null;
 
-    // Auto challenge
     if (isAuto) {
       if (!targetMet) return null;
       return (
@@ -259,7 +256,6 @@ export default function ChallengeDetailScreen({route, navigation}: any) {
       );
     }
 
-    // Online/offline: joined, waiting for event to end before submitting
     if (pendingRequest) {
       return (
         <View style={styles.pendingBanner}>

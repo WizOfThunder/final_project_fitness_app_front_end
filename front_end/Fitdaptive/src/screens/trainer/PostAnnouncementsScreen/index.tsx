@@ -84,7 +84,6 @@ export default function PostAnnouncementsScreen({route, navigation}: any) {
     try {
       await apiClient.post(`/announcements/${postId}`, {message: msg});
       setText('');
-      // Socket will push it back via new_announcement
     } catch (e: any) {
       Alert.alert(
         'Error',

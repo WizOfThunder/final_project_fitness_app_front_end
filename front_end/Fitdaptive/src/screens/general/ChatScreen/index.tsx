@@ -68,7 +68,6 @@ export default function ChatScreen({route, navigation}: any) {
     try {
       const res = await apiClient.get(`/chat/conversation/${receiverId}`);
       setMessages(res.data || []);
-      // Mark as read
       apiClient.put(`/chat/read/${receiverId}`).catch(() => {});
     } catch (_) {}
     setLoading(false);
@@ -93,7 +92,6 @@ export default function ChatScreen({route, navigation}: any) {
 
     onMessageSent((msg: Message) => {
       setMessages(prev => {
-        // replace optimistic message (string id) with real one from server
         const idx = prev.findIndex(
           m => typeof m.id === 'string' && m.message === msg.message,
         );
@@ -111,7 +109,6 @@ export default function ChatScreen({route, navigation}: any) {
     });
 
     return () => {
-      // Only remove chat-specific listeners, don't disconnect the shared socket
       const s = getSocket();
       s?.off('receive_message');
       s?.off('message_sent');
@@ -156,7 +153,6 @@ export default function ChatScreen({route, navigation}: any) {
     const text = inputText.trim();
     if (!text || !userId) return;
 
-    // Optimistic message
     const optimistic: Message = {
       id: `opt-${Date.now()}`,
       sender_id: userId,

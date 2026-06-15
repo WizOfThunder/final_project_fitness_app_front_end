@@ -193,7 +193,6 @@ export default function AIWorkoutPlanScreen({navigation}: any) {
       };
       setPlan(updatedPlan);
 
-      // Check if all of today's items are now done
       const todayName = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
       });
@@ -272,7 +271,6 @@ export default function AIWorkoutPlanScreen({navigation}: any) {
   });
 
   const createdDate = new Date(plan.created_at).toLocaleDateString();
-  // Use local timezone to get today's day name
   const todayName = new Date().toLocaleDateString('en-US', {weekday: 'long'});
   const queueActive =
     queueJob && ['queued', 'processing'].includes(queueJob.status);

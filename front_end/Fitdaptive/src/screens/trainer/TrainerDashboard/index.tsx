@@ -346,7 +346,6 @@ export default function TrainerDashboard({navigation}: any) {
       appState.current = nextState;
     });
     return () => sub.remove();
-    // This dashboard intentionally bootstraps once on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -421,7 +420,6 @@ export default function TrainerDashboard({navigation}: any) {
         0,
       );
 
-      // Calories from today midnight until now
       let totalCalories = 0;
       try {
         const activeCalData = await readRecords('ActiveCaloriesBurned', {

@@ -106,7 +106,6 @@ export default function FitnessSurveyScreen({navigation}: any) {
   const pollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pollInFlightRef = useRef(false);
 
-  // Keep answers in sync if user.goal changes (e.g. after editing profile)
   useEffect(() => {
     setAnswers((prev: any) =>
       Object.keys(prev).length === 0 && profileGoal ? {1: profileGoal} : prev
@@ -132,13 +131,11 @@ export default function FitnessSurveyScreen({navigation}: any) {
     const selected = Array.isArray(answers[question.id]) ? answers[question.id] : [];
     const exclusiveOptions = question.exclusiveOptions || [];
 
-    // If an exclusive option is clicked, select only it
     if (exclusiveOptions.includes(option)) {
       setAnswers({...answers, [question.id]: [option]});
       return;
     }
 
-    // Otherwise remove any exclusive options and toggle the clicked one
     const filtered = selected.filter(
       (o: string) => !exclusiveOptions.includes(o),
     );

@@ -237,7 +237,6 @@ apiClient.post = (path, data, config) => request('POST', path, data, config);
 apiClient.put = (path, data, config) => request('PUT', path, data, config);
 apiClient.patch = (path, data, config) => request('PATCH', path, data, config);
 
-// Real API implementation
 const realAPI = {
   login: async (email, password) => {
     const response = await apiClient.post('/auth/login', {email, password});
@@ -320,7 +319,6 @@ const realAPI = {
   },
 };
 
-// Export the appropriate API based on config
 const API = USE_MOCK_API ? mockAPI : realAPI;
 
 export default API;

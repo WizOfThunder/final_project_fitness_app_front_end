@@ -384,7 +384,6 @@ export default function RankingScreen() {
             </View>
           )}
           ListFooterComponent={
-            // Pin current user's rank if not in top list
             myRank && !myInList ? (
               <View style={styles.myRankBanner}>
                 <Icon name="person-circle" size={20} color="#FF6B35" />

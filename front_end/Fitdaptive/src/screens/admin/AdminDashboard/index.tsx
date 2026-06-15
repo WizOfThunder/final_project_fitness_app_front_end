@@ -118,7 +118,6 @@ export default function AdminDashboard({navigation}: any) {
     });
   };
 
-  // Build chart data from API response
   const buildUserGrowthChart = () => {
     const rows = data?.user_growth || [];
     if (!rows.length) return {labels: ['—'], datasets: [{data: [0]}]};

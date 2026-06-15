@@ -336,7 +336,6 @@ export default function DietSurveyScreen({navigation}: any) {
         onPress: async () => {
           setLoading(true);
           try {
-            // Get location, fall back gracefully if denied/unavailable
             const coords = await new Promise<{latitude: number; longitude: number} | null>(resolve => {
               getCurrentPosition(
                 (pos: any) => resolve({latitude: pos.coords.latitude, longitude: pos.coords.longitude}),

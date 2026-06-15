@@ -264,7 +264,7 @@ export default function TrainerDetailScreen({route, navigation}: any) {
     post?.enrollment_deadline &&
     (() => {
       const ms = parseDateOnly(post.enrollment_deadline).getTime() - Date.now();
-      return ms > 0 && ms < 3 * 24 * 3600000; // within 3 days
+      return ms > 0 && ms < 3 * 24 * 3600000;
     })();
 
   const handleHire = () => {
@@ -302,7 +302,6 @@ export default function TrainerDetailScreen({route, navigation}: any) {
     try {
       const res = await apiClient.post(`/trainers/${postId}/hire`);
       const {redirect_url} = res.data;
-      // Open Midtrans payment page in browser
       await Linking.openURL(redirect_url);
       const paymentMessage = isCohort
         ? 'Complete the payment in your browser. Once confirmed, you will be enrolled and activated when the program starts.'

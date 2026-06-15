@@ -82,7 +82,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
 
   useEffect(() => {
     buildWeek(workoutItems, dietItems, googleEvents, trainerSessions);
-    // buildWeek is derived from the listed state inputs and weekStart.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekStart, workoutItems, dietItems, googleEvents, trainerSessions]);
 
@@ -91,7 +90,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
       const stored = await AsyncStorage.getItem(ENV.GOOGLE_EVENTS_STORAGE_KEY);
       if (stored) {
         const parsed: Record<string, CalendarEvent[]> = JSON.parse(stored);
-        // Ensure color is always correct regardless of cached value
         Object.values(parsed).forEach(events =>
           events.forEach(e => {
             e.color = '#007AFF';
@@ -127,7 +125,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
       setWorkoutItems(wItems);
       setDietItems(dItems);
 
-      // Fetch sessions for active hires
       const activeHires: any[] = (hiresRes.data || []).filter(
         (h: any) => h.status === 'active',
       );
@@ -165,7 +162,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
       const fullDayName = DAY_NAMES_FULL[jsDay];
       const events: CalendarEvent[] = [];
 
-      // Trainer sessions first (highest priority)
       tSessions
         .filter(s => s.scheduled_date === day.date)
         .forEach(s => {
@@ -260,7 +256,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
       const date = new Date(start);
       date.setDate(start.getDate() + i);
       const jsDay = date.getDay();
-      // Use local date components to avoid UTC shift
       const dateStr = `${date.getFullYear()}-${String(
         date.getMonth() + 1,
       ).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -424,7 +419,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
             if (!item.start?.dateTime) {
               return null;
             }
-            // Parse dateTime respecting timezone offset to avoid date shifting
             const dt = item.start.dateTime as string;
             const match = dt.match(/^(\d{4})-(\d{2})-(\d{2})/);
             return match ? `${match[1]}-${match[2]}-${match[3]}` : null;
@@ -465,7 +459,6 @@ const UnifiedCalendarScreen = ({navigation}: any) => {
       );
     } catch (err: any) {
       if (err.code === 'SIGN_IN_CANCELLED' || err.code === '-5') {
-        // user cancelled
       } else {
         Alert.alert(
           'Sync Failed',

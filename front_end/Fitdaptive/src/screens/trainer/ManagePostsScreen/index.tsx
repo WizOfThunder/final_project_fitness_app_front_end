@@ -275,7 +275,6 @@ export default function ManagePostsScreen() {
       );
     }
 
-    // Check self-overlap within this post's own slots
     for (let i = 0; i < form.schedule.length; i++) {
       for (let j = i + 1; j < form.schedule.length; j++) {
         if (slotsOverlap(form.schedule[i], form.schedule[j])) {
@@ -504,7 +503,7 @@ export default function ManagePostsScreen() {
     );
   }
 
-  // Issue #8: gate the entire screen for unapproved trainers
+  // Checks for unapproved trainers
   if (!isApproved) {
     return (
       <View style={[s.center, {padding: 32}]}>

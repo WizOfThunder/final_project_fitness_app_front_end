@@ -167,7 +167,7 @@ export default function UserManagementScreen() {
 
     if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
       const [year, month, day] = value.split('-').map(Number);
-      return new Date(year, month - 1, day).toLocaleDateString('id-ID', {
+      return new Date(year, month - 1, day).toLocaleDateString('en-US', {
         day: '2-digit',
         month: 'short',
         year: 'numeric',
@@ -179,7 +179,7 @@ export default function UserManagementScreen() {
       return value.split('T')[0];
     }
 
-    return date.toLocaleDateString('id-ID', {
+    return date.toLocaleDateString('en-US', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',

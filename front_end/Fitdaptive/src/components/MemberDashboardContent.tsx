@@ -381,7 +381,6 @@ export default function MemberDashboardContent({
       appState.current = nextState;
     });
     return () => sub.remove();
-    // This member dashboard intentionally bootstraps once on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

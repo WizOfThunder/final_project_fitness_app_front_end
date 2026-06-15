@@ -96,7 +96,7 @@ const TransactionDetailScreen = ({route, navigation}: any) => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleString('id-ID', {
+    return date.toLocaleString('en-US', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',

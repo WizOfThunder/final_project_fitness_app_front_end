@@ -94,7 +94,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         const savedToken = tokenEntry[1];
         const savedUser = userEntry[1] ? JSON.parse(userEntry[1]) : null;
         if (savedToken && savedUser) {
-          console.log('[AUTH] JWT Token (restored):', savedToken); // TEMPORARY: remove before production
+          console.log('[AUTH] JWT Token (restored):', savedToken);
           setToken(savedToken);
           setUser(savedUser);
           setApiToken(savedToken);
@@ -127,7 +127,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const login = async (email: string, password: string) => {
     const data = await API.login(email, password);
-    console.log('[AUTH] JWT Token:', data.token); // TEMPORARY: remove before production
+    console.log('[AUTH] JWT Token:', data.token);
     setToken(data.token);
     setUser(data.user);
     setApiToken(data.token);

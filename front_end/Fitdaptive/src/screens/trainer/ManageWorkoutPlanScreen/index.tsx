@@ -25,7 +25,6 @@ export default function ManageWorkoutPlanScreen({navigation}: any) {
       const clientList: any[] = clientsRes.data || [];
       setClients(clientList);
 
-      // Fetch plans for each client in parallel
       const planMap: Record<number, any[]> = {};
       await Promise.all(
         clientList.map(async (c: any) => {

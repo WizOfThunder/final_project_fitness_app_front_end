@@ -193,7 +193,6 @@ export default function ChallengeListScreen({navigation}: any) {
   };
 
   const handleAvailablePress = async (item: any) => {
-    // Re-fetch this challenge to check if it just became full
     if (item.max_participants) {
       try {
         const res = await apiClient.get(`/challenges/${item.id}`);

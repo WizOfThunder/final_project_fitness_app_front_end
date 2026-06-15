@@ -107,7 +107,7 @@ const formatPrice = (price: number) =>
 
 const formatDateTime = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleString('id-ID', {
+  return date.toLocaleString('en-US', {
     day: '2-digit',
     month: 'short',
     year: 'numeric',

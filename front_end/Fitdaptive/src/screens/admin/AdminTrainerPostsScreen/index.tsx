@@ -73,7 +73,6 @@ export default function AdminTrainerPostsScreen() {
     if (!toggleTarget) return;
     setTogglingId(toggleTarget.id);
     setToggleTarget(null);
-    // optimistically update detail modal too
     if (detailPost?.id === toggleTarget.id) {
       setDetailPost((p: any) => p ? {...p, is_active: !p.is_active} : p);
     }

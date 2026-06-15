@@ -1,7 +1,6 @@
 import {io, Socket} from 'socket.io-client';
 import {API_BASE_URL} from '../config/apiConfig';
 
-// Strip /api/v1 suffix — socket connects to root
 const SOCKET_URL = API_BASE_URL.replace('/api/v1', '');
 
 let socket: Socket | null = null;

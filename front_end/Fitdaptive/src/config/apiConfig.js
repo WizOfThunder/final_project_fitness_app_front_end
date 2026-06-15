@@ -15,10 +15,10 @@ function normalizeApiBaseUrl(value) {
 
 const configuredApiUrl = normalizeApiBaseUrl(Config.API_URL);
 
-// API base URL (for when using real backend)
+// API base URL
 export const API_BASE_URL = configuredApiUrl || (__DEV__ 
   ? 'http://192.168.1.4:3000/api/v1' 
-  // ? 'http://10.98.81.120:3000/api/v1' // Replace with your PC's IP when using phone hotspot
+  // ? 'http://10.98.81.120:3000/api/v1' // Replace with your PC's IP
   : 'https://your-production-api.com/api/v1');
 
 // Other config

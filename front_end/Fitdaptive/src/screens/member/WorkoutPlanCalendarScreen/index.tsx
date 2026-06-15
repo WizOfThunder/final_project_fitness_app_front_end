@@ -54,8 +54,7 @@ const WorkoutPlanCalendarScreen = () => {
   const buildMarkedDates = useCallback(
     (items: ExerciseItem[], createdAt: string) => {
       const startDate = new Date(createdAt);
-      // Align to the Monday of the week the plan was created
-      const dayOfWeek = startDate.getDay(); // 0=Sun
+      const dayOfWeek = startDate.getDay();
       const monday = new Date(startDate);
       monday.setDate(startDate.getDate() - ((dayOfWeek + 6) % 7));
 
@@ -67,7 +66,7 @@ const WorkoutPlanCalendarScreen = () => {
           return;
         }
         const d = new Date(monday);
-        d.setDate(monday.getDate() + ((idx + 6) % 7)); // Mon=0 offset
+        d.setDate(monday.getDate() + ((idx + 6) % 7));
         const dateStr = formatLocalDate(d);
         marked[dateStr] = {marked: true, dotColor: '#007AFF'};
       });
@@ -84,7 +83,6 @@ const WorkoutPlanCalendarScreen = () => {
           headers: {Authorization: `Bearer ${token}`},
         });
         const data = await res.json();
-        // /ai/my-workout is already AI-only and newest-first.
         const plans = Array.isArray(data) ? data : [];
         const latest = plans[0];
         if (latest && latest.items) {
@@ -114,7 +112,7 @@ const WorkoutPlanCalendarScreen = () => {
     const diffDays = Math.round(
       (selected.getTime() - monday.getTime()) / 86400000,
     );
-    const dayName = DAY_ORDER[(diffDays + 1) % 7]; // +1 because monday offset
+    const dayName = DAY_ORDER[(diffDays + 1) % 7];
     return allItems.filter(i => i.day === dayName);
   };
 
