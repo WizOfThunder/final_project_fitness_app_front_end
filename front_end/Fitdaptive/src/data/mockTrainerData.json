@@ -1,0 +1,103 @@
+{
+  "trainerHealthStats": {
+    "steps": 12450,
+    "stepsGoal": 10000,
+    "caloriesBurned": 580,
+    "caloriesGoal": 600,
+    "sleepHours": 6.8,
+    "sleepGoal": 8,
+    "activeMinutes": 65
+  },
+  "clientOverview": {
+    "totalClients": 24,
+    "activeToday": 18,
+    "completedWorkouts": 15,
+    "pendingMessages": 3,
+    "newRequests": 2
+  },
+  "todaySchedule": [
+    {
+      "id": "1",
+      "clientName": "John Doe",
+      "time": "09:00",
+      "type": "Session",
+      "status": "upcoming"
+    },
+    {
+      "id": "2",
+      "clientName": "Sarah Smith",
+      "time": "14:00",
+      "type": "Consultation",
+      "status": "upcoming"
+    }
+  ],
+  "clientActivity": [
+    {
+      "id": "1",
+      "clientName": "John Doe",
+      "activity": "Completed Leg Day",
+      "calories": 380,
+      "time": "30 min ago",
+      "icon": "checkmark-circle",
+      "color": "#34C759"
+    },
+    {
+      "id": "2",
+      "clientName": "Sarah Smith",
+      "activity": "Reached 15,000 steps",
+      "steps": 15000,
+      "time": "1 hour ago",
+      "icon": "walk",
+      "color": "#007AFF"
+    },
+    {
+      "id": "3",
+      "clientName": "Mike Johnson",
+      "activity": "Missed workout - needs follow-up",
+      "time": "2 hours ago",
+      "icon": "alert-circle",
+      "color": "#FF3B30"
+    },
+    {
+      "id": "4",
+      "clientName": "Emily Davis",
+      "activity": "Completed morning cardio",
+      "calories": 320,
+      "time": "3 hours ago",
+      "icon": "checkmark-circle",
+      "color": "#34C759"
+    }
+  ],
+  "performanceMetrics": {
+    "activeClients": 24,
+    "retentionRate": 92,
+    "avgSatisfaction": 4.8,
+    "plansCreated": 8
+  },
+  "topClients": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "streak": 12,
+      "avatar": "JD"
+    },
+    {
+      "id": "2",
+      "name": "Sarah Smith",
+      "streak": 10,
+      "avatar": "SS"
+    },
+    {
+      "id": "3",
+      "name": "Emily Davis",
+      "streak": 8,
+      "avatar": "ED"
+    }
+  ],
+  "contentStats": {
+    "workoutPlans": 45,
+    "videosUploaded": 23,
+    "mostPopular": "HIIT Cardio Blast",
+    "totalViews": 1240
+  }
+}

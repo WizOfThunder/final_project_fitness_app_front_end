@@ -1,0 +1,25 @@
+import {StyleSheet} from 'react-native';
+
+export const styles = StyleSheet.create({
+  flex: {flex: 1},
+  container: {flex: 1, backgroundColor: '#f5f5f5'},
+  content: {padding: 20, paddingBottom: 40},
+  trainerInfo: {alignItems: 'center', marginBottom: 28},
+  avatarPlaceholder: {width: 80, height: 80, borderRadius: 40, backgroundColor: '#007AFF', justifyContent: 'center', alignItems: 'center', marginBottom: 12},
+  avatarText: {fontSize: 32, fontWeight: 'bold', color: '#fff'},
+  trainerName: {fontSize: 22, fontWeight: '700', color: '#111', marginBottom: 4},
+  subtitle: {fontSize: 14, color: '#666'},
+  section: {backgroundColor: '#fff', borderRadius: 12, padding: 16, marginBottom: 16},
+  label: {fontSize: 15, fontWeight: '600', color: '#333', marginBottom: 12},
+  required: {color: '#FF3B30'},
+  optional: {fontSize: 13, fontWeight: '400', color: '#999'},
+  starsRow: {flexDirection: 'row', justifyContent: 'center', gap: 8, marginBottom: 8},
+  ratingLabel: {textAlign: 'center', fontSize: 15, fontWeight: '600', color: '#FF9500'},
+  textInput: {borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 8, padding: 12, fontSize: 14, color: '#333', minHeight: 110},
+  charCount: {textAlign: 'right', fontSize: 12, color: '#aaa', marginTop: 4},
+  submitButton: {backgroundColor: '#007AFF', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 16, borderRadius: 12, gap: 8, marginTop: 8},
+  submitDisabled: {opacity: 0.5},
+  submitText: {color: '#fff', fontSize: 16, fontWeight: '600'},
+  hireAgainButton: {flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 14, borderRadius: 12, marginTop: 12, borderWidth: 1.5, borderColor: '#FF6B35', backgroundColor: '#fff'},
+  hireAgainText: {fontSize: 15, fontWeight: '600', color: '#FF6B35'},
+});

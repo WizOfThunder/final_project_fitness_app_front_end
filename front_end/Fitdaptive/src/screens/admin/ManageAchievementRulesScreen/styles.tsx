@@ -1,0 +1,47 @@
+import {StyleSheet} from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: '#F5F5F5'},
+  header: {backgroundColor: '#F5F5F5', paddingTop: 12, paddingHorizontal: 12},
+  // Search + Add
+  searchRow: {flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8},
+  searchBox: {flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', borderRadius: 12, paddingHorizontal: 12, paddingVertical: 10, borderWidth: 1, borderColor: '#E0E0E0'},
+  searchInput: {flex: 1, fontSize: 14, color: '#333', padding: 0},
+  addIconBtn: {width: 46, height: 46, borderRadius: 12, backgroundColor: '#FF6B35', justifyContent: 'center', alignItems: 'center', elevation: 2, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.15, shadowRadius: 3},
+  // Filters
+  filterRow: {marginBottom: 4},
+  filterContent: {gap: 8, paddingBottom: 4, flexDirection: 'row', alignItems: 'center'},
+  filterChip: {paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, backgroundColor: '#fff', borderWidth: 1, borderColor: '#E0E0E0', flexShrink: 0, flexGrow: 0},
+  filterChipActive: {backgroundColor: '#FF6B35', borderColor: '#FF6B35'},
+  filterChipText: {fontSize: 13, color: '#666', flexShrink: 0},
+  filterChipTextActive: {color: '#fff', fontWeight: '600'},
+  statusRow: {flexDirection: 'row', gap: 8, paddingVertical: 8},
+  statusChip: {paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: '#fff', borderWidth: 1, borderColor: '#E0E0E0'},
+  statusChipActive: {backgroundColor: '#1a1a1a', borderColor: '#1a1a1a'},
+  statusChipText: {fontSize: 13, color: '#666'},
+  statusChipTextActive: {color: '#fff', fontWeight: '600'},
+  // List
+  item: {flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: 12, padding: 12, gap: 10, elevation: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 2},
+  itemInactive: {opacity: 0.6},
+  iconBox: {width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center'},
+  info: {flex: 1},
+  achievement: {fontSize: 15, fontWeight: '600', color: '#333', marginBottom: 2},
+  condition: {fontSize: 12, color: '#888'},
+  inactiveLabel: {fontSize: 11, color: '#FF3B30', marginTop: 2, fontWeight: '600'},
+  editButton: {padding: 8},
+  // Modal
+  modalOverlay: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end'},
+  modalBox: {backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 24, paddingBottom: 40, maxHeight: '90%'},
+  modalTitle: {fontSize: 18, fontWeight: 'bold', color: '#333', marginBottom: 16},
+  label: {fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6, marginTop: 8},
+  input: {borderWidth: 1, borderColor: '#E0E0E0', borderRadius: 10, padding: 12, fontSize: 15, color: '#333', backgroundColor: '#F9F9F9', marginBottom: 4},
+  typeBtn: {paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: '#F0F0F0', borderWidth: 1, borderColor: '#ddd'},
+  typeBtnActive: {backgroundColor: '#FF6B35', borderColor: '#FF6B35'},
+  typeText: {fontSize: 13, color: '#666'},
+  typeTextActive: {color: '#fff', fontWeight: '600'},
+  modalButtons: {flexDirection: 'row', gap: 10, marginTop: 16},
+  cancelBtn: {flex: 1, padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#F0F0F0'},
+  saveBtn: {flex: 1, padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#FF6B35'},
+  cancelText: {color: '#666', fontSize: 15, fontWeight: '600'},
+  saveText: {color: '#fff', fontSize: 15, fontWeight: '600'},
+});

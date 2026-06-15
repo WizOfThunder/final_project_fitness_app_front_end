@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "368300502785",
-    "project_id": "fitdaptive",
-    "storage_bucket": "fitdaptive.firebasestorage.app"
+    "project_number": "934660874085",
+    "project_id": "gen-lang-client-0498005766",
+    "storage_bucket": "gen-lang-client-0498005766.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:368300502785:android:2ce25b7178a79603847500",
+        "mobilesdk_app_id": "1:934660874085:android:47ae8f60b3772643e88b8c",
         "android_client_info": {
           "package_name": "com.fitdaptive"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "934660874085-8ep8tsgeubvr5souvktbrl56ssbbegc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fitdaptive",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "934660874085-gj6fteq3bc6f68ne1357ulapug1ctt69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyC8aLd7IhffPFumTfjx3IJSEfp_1QDonDI"
+          "current_key": "AIzaSyAOuTLYyDifgeEiu2Ed983aLUo53pK9z9Y"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934660874085-9k4o8p8u8mnmorjo14mprfcnc6smkam1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

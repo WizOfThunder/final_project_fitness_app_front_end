@@ -1,0 +1,28 @@
+import {StyleSheet} from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: '#F5F5F5'},
+  searchRow: {flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', margin: 12, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8, elevation: 2, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.08, shadowRadius: 3},
+  searchIcon: {marginRight: 8},
+  searchInput: {flex: 1, fontSize: 15, color: '#333', padding: 0},
+  filterSection: {paddingBottom: 8},
+  filterRow: {maxHeight: 44, marginBottom: 8},
+  filterContent: {paddingHorizontal: 12, paddingRight: 16, gap: 8, alignItems: 'center'},
+  chip: {height: 34, paddingHorizontal: 14, borderRadius: 17, backgroundColor: '#F0F0F0', borderWidth: 1, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center'},
+  chipActive: {backgroundColor: '#34C759', borderColor: '#34C759'},
+  chipText: {fontSize: 13, color: '#666', fontWeight: '500'},
+  chipTextActive: {color: '#fff', fontWeight: '600'},
+  listContainer: {flex: 1},
+  list: {padding: 12, gap: 10, flexGrow: 1},
+  listEmpty: {justifyContent: 'center'},
+  card: {backgroundColor: '#fff', borderRadius: 12, flexDirection: 'row', alignItems: 'center', overflow: 'hidden', elevation: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.06, shadowRadius: 2},
+  cardImage: {width: 90, height: 90, resizeMode: 'cover'},
+  cardImagePlaceholder: {width: 90, height: 90, backgroundColor: '#F0F0F0', justifyContent: 'center', alignItems: 'center'},
+  cardBody: {flex: 1, padding: 12},
+  cardName: {fontSize: 15, fontWeight: '600', color: '#333', marginBottom: 6},
+  cardMeta: {flexDirection: 'row', flexWrap: 'wrap', gap: 8},
+  metaItem: {flexDirection: 'row', alignItems: 'center', gap: 3},
+  metaText: {fontSize: 12, color: '#666'},
+  empty: {alignItems: 'center', gap: 10},
+  emptyText: {fontSize: 15, color: '#aaa'},
+});
