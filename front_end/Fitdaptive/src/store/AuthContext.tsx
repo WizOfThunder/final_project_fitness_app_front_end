@@ -152,7 +152,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     initializeSocket(data.user.id);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await apiClient.post('/notification/update-token', {fcm_token: null});
+    } catch (_) {}
     setUser(null);
     setToken(null);
     setApiToken(null);
