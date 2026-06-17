@@ -216,7 +216,7 @@ async function executeRequest(method, path, data, config = {}) {
 async function request(method, path, data, config = {}) {
   const canRetry = RETRY_METHODS.has(method);
   const maxAttempts = canRetry ? MAX_RETRIES : 1;
-  const idempotencyKey = method === 'POST' ? generateIdempotencyKey() : null;
+  const idempotencyKey = ['POST', 'PUT', 'PATCH'].includes(method) ? generateIdempotencyKey() : null;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
