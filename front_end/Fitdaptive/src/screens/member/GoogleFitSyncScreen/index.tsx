@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {initialize, requestPermission, readRecords, SdkAvailabilityStatus} from 'react-native-health-connect';
+import {initialize, requestPermission, readRecords, aggregateRecord, SdkAvailabilityStatus} from 'react-native-health-connect';
 import {styles} from './styles';
 
 export default function GoogleFitSyncScreen() {
@@ -53,59 +53,40 @@ export default function GoogleFitSyncScreen() {
       const startDate = new Date();
       startDate.setHours(0, 0, 0, 0);
 
-      // Fetch Steps
-      const stepsData = await readRecords('Steps', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
-      });
-      const totalSteps = stepsData.records.reduce((sum: number, record: any) => sum + (record.count || 0), 0);
+      const timeRange = {
+        operator: 'between' as const,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      };
 
-      // Fetch Calories
-      const caloriesData = await readRecords('TotalCaloriesBurned', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const stepsAgg = await aggregateRecord({
+        recordType: 'Steps',
+        timeRangeFilter: timeRange,
       });
-      const totalCalories = caloriesData.records.reduce((sum: number, record: any) => sum + (record.energy?.inKilocalories || 0), 0);
+      const totalSteps = stepsAgg.COUNT_TOTAL || 0;
 
-      // Fetch Distance
-      const distanceData = await readRecords('Distance', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const caloriesAgg = await aggregateRecord({
+        recordType: 'TotalCaloriesBurned',
+        timeRangeFilter: timeRange,
       });
-      const totalDistance = distanceData.records.reduce((sum: number, record: any) => sum + (record.distance?.inKilometers || 0), 0);
+      const totalCalories = caloriesAgg.ENERGY_TOTAL?.inKilocalories || 0;
 
-      // Fetch Heart Rate (latest)
+      const distanceAgg = await aggregateRecord({
+        recordType: 'Distance',
+        timeRangeFilter: timeRange,
+      });
+      const totalDistance = (distanceAgg.DISTANCE?.inMeters || 0) / 1000;
+
       const heartRateData = await readRecords('HeartRate', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+        timeRangeFilter: timeRange,
       });
       const latestHeartRate = heartRateData.records.length > 0 ? heartRateData.records[heartRateData.records.length - 1].samples[0]?.beatsPerMinute || 0 : 0;
 
-      // Fetch Exercise Sessions
-      const exerciseData = await readRecords('ExerciseSession', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const exerciseAgg = await aggregateRecord({
+        recordType: 'ExerciseSession',
+        timeRangeFilter: timeRange,
       });
-      const totalMinutes = exerciseData.records.reduce((sum: number, record: any) => {
-        const start = new Date(record.startTime).getTime();
-        const end = new Date(record.endTime).getTime();
-        return sum + (end - start) / 60000;
-      }, 0);
+      const totalMinutes = (exerciseAgg.EXERCISE_DURATION_TOTAL?.inSeconds || 0) / 60;
 
       setHealthData({
         steps: Math.round(totalSteps),

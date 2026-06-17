@@ -19,6 +19,7 @@ import {
   initialize,
   requestPermission,
   readRecords,
+  aggregateRecord,
   getGrantedPermissions,
 } from 'react-native-health-connect';
 import {apiClient} from '../../../services/api';
@@ -408,47 +409,33 @@ export default function TrainerDashboard({navigation}: any) {
       sleepStart.setDate(sleepStart.getDate() - 1);
       sleepStart.setHours(12, 0, 0, 0);
 
-      const stepsData = await readRecords('Steps', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const timeRange = {
+        operator: 'between' as const,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      };
+
+      const stepsAgg = await aggregateRecord({
+        recordType: 'Steps',
+        timeRangeFilter: timeRange,
       });
-      const totalSteps = stepsData.records.reduce(
-        (sum: number, record: any) => sum + (record.count || 0),
-        0,
-      );
+      const totalSteps = stepsAgg.COUNT_TOTAL || 0;
 
       let totalCalories = 0;
       try {
-        const activeCalData = await readRecords('ActiveCaloriesBurned', {
-          timeRangeFilter: {
-            operator: 'between',
-            startTime: startDate.toISOString(),
-            endTime: endDate.toISOString(),
-          },
+        const activeCalAgg = await aggregateRecord({
+          recordType: 'ActiveCaloriesBurned',
+          timeRangeFilter: timeRange,
         });
-        totalCalories = activeCalData.records.reduce(
-          (sum: number, record: any) =>
-            sum + (record.energy?.inKilocalories || 0),
-          0,
-        );
+        totalCalories = activeCalAgg.ACTIVE_CALORIES_TOTAL?.inKilocalories || 0;
       } catch (_) {}
       if (totalCalories === 0) {
         try {
-          const totalCalData = await readRecords('TotalCaloriesBurned', {
-            timeRangeFilter: {
-              operator: 'between',
-              startTime: startDate.toISOString(),
-              endTime: endDate.toISOString(),
-            },
+          const totalCalAgg = await aggregateRecord({
+            recordType: 'TotalCaloriesBurned',
+            timeRangeFilter: timeRange,
           });
-          totalCalories = totalCalData.records.reduce(
-            (sum: number, record: any) =>
-              sum + (record.energy?.inKilocalories || 0),
-            0,
-          );
+          totalCalories = totalCalAgg.ENERGY_TOTAL?.inKilocalories || 0;
         } catch (_) {}
       }
 
@@ -476,34 +463,17 @@ export default function TrainerDashboard({navigation}: any) {
           3600000;
       }
 
-      const distanceData = await readRecords('Distance', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const distanceAgg = await aggregateRecord({
+        recordType: 'Distance',
+        timeRangeFilter: timeRange,
       });
-      const totalDistanceMeters = distanceData.records.reduce(
-        (sum: number, record: any) => sum + (record.distance?.inMeters || 0),
-        0,
-      );
-      const distanceKm = totalDistanceMeters / 1000;
+      const distanceKm = (distanceAgg.DISTANCE?.inMeters || 0) / 1000;
 
-      const exerciseData = await readRecords('ExerciseSession', {
-        timeRangeFilter: {
-          operator: 'between',
-          startTime: startDate.toISOString(),
-          endTime: endDate.toISOString(),
-        },
+      const exerciseAgg = await aggregateRecord({
+        recordType: 'ExerciseSession',
+        timeRangeFilter: timeRange,
       });
-      const exerciseMinutes = exerciseData.records.reduce(
-        (sum: number, record: any) =>
-          sum +
-          (new Date(record.endTime).getTime() -
-            new Date(record.startTime).getTime()) /
-            60000,
-        0,
-      );
+      const exerciseMinutes = (exerciseAgg.EXERCISE_DURATION_TOTAL?.inSeconds || 0) / 60;
 
       const bpData = await readRecords('BloodPressure', {
         timeRangeFilter: {
