@@ -2,7 +2,7 @@ import {USE_MOCK_API, API_BASE_URL} from '../config/apiConfig';
 import mockAPI from '../mocks/mockAPI';
 
 const DEFAULT_TIMEOUT = 300000;
-const RETRY_METHODS = new Set(['GET', 'PUT', 'PATCH', 'DELETE']);
+const RETRY_METHODS = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
 const MAX_RETRIES = 3;
 const RETRY_DELAYS = [400, 900, 1500];
 
@@ -131,6 +131,13 @@ function isNetworkError(error) {
   return error?.code === 'ERR_NETWORK';
 }
 
+function generateIdempotencyKey() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
+
 async function executeRequest(method, path, data, config = {}) {
   const {headers, params, timeout} = config || {};
   const url = buildUrl(path, params);
@@ -209,10 +216,14 @@ async function executeRequest(method, path, data, config = {}) {
 async function request(method, path, data, config = {}) {
   const canRetry = RETRY_METHODS.has(method);
   const maxAttempts = canRetry ? MAX_RETRIES : 1;
+  const idempotencyKey = method === 'POST' ? generateIdempotencyKey() : null;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
-      return await executeRequest(method, path, data, config);
+      const requestConfig = idempotencyKey
+        ? {...config, headers: {...(config?.headers || {}), 'Idempotency-Key': idempotencyKey}}
+        : config;
+      return await executeRequest(method, path, data, requestConfig);
     } catch (error) {
       const isLastAttempt = attempt === maxAttempts - 1;
       const shouldRetry = canRetry && isNetworkError(error) && !isLastAttempt;
