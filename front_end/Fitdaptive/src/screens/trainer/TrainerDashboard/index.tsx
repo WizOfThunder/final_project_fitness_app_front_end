@@ -378,7 +378,6 @@ export default function TrainerDashboard({navigation}: any) {
       const granted = await getGrantedPermissions();
       const grantedTypes = granted.map((p: any) => p.recordType);
       const allGranted = needed.every(t => grantedTypes.includes(t));
-      healthInitialized.current = true;
       if (allGranted) {
         await fetchTrainerHealthData();
       } else {
@@ -386,6 +385,7 @@ export default function TrainerDashboard({navigation}: any) {
           needed.map(t => ({accessType: 'read', recordType: t})),
         );
       }
+      healthInitialized.current = true;
     } catch (error) {
       console.error('Health Connect init error:', error);
       setTrainerHealthStats({

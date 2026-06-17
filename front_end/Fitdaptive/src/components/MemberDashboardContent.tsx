@@ -413,7 +413,6 @@ export default function MemberDashboardContent({
       const granted = await getGrantedPermissions();
       const grantedTypes = granted.map((p: any) => p.recordType);
       const allGranted = needed.every(t => grantedTypes.includes(t));
-      healthInitialized.current = true;
       if (allGranted) {
         await fetchHealthData();
       } else {
@@ -421,6 +420,7 @@ export default function MemberDashboardContent({
           needed.map(t => ({accessType: 'read', recordType: t})),
         );
       }
+      healthInitialized.current = true;
     } catch (error) {
       setHealthStats({
         steps: 0,
