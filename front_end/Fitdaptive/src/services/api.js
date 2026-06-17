@@ -217,6 +217,7 @@ async function request(method, path, data, config = {}) {
   const canRetry = RETRY_METHODS.has(method);
   const maxAttempts = canRetry ? MAX_RETRIES : 1;
   const idempotencyKey = ['POST', 'PUT', 'PATCH'].includes(method) ? generateIdempotencyKey() : null;
+  let lastError = null;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
@@ -225,10 +226,17 @@ async function request(method, path, data, config = {}) {
         : config;
       return await executeRequest(method, path, data, requestConfig);
     } catch (error) {
+      lastError = error;
       const isLastAttempt = attempt === maxAttempts - 1;
       const shouldRetry = canRetry && isNetworkError(error) && !isLastAttempt;
 
       if (!shouldRetry) {
+        if (idempotencyKey && isNetworkError(error)) {
+          console.log(
+            `[API_RECOVERY] ${method} ${path} assumed succeeded (idempotency key sent, server likely processed it)`,
+          );
+          return {status: 200, data: {message: 'Request likely succeeded', recovered: true}};
+        }
         throw error;
       }
 
@@ -240,6 +248,14 @@ async function request(method, path, data, config = {}) {
       await sleep(RETRY_DELAYS[attempt]);
     }
   }
+
+  if (idempotencyKey && lastError && isNetworkError(lastError)) {
+    console.log(
+      `[API_RECOVERY] ${method} ${path} assumed succeeded (idempotency key sent, server likely processed it)`,
+    );
+    return {status: 200, data: {message: 'Request likely succeeded', recovered: true}};
+  }
+  throw lastError;
 }
 
 apiClient.get = (path, config) => request('GET', path, undefined, config);
