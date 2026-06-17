@@ -203,7 +203,7 @@ export default function AdminTrainerPostsScreen() {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 20}}>
-              {/* Trainer row */}
+              {/* Trainer card */}
               <View style={styles.detailTrainerRow}>
                 {getImageUrl(detailPost?.avatar_url)
                   ? <Image source={{uri: getImageUrl(detailPost?.avatar_url)!}} style={styles.detailAvatar} />
@@ -223,90 +223,161 @@ export default function AdminTrainerPostsScreen() {
                 </View>
               </View>
 
-              {/* Key info chips */}
-              <View style={styles.chipsRow}>
-                <View style={styles.chip}>
-                  <Icon name={detailPost?.session_type === 'offline' ? 'location-outline' : 'videocam-outline'} size={13} color="#FF6B35" />
-                  <Text style={styles.chipText}> {detailPost?.session_type === 'offline' ? 'Offline' : 'Online'}</Text>
-                </View>
-                <View style={styles.chip}>
-                  <Icon name={detailPost?.visibility === 'private' ? 'lock-closed-outline' : 'people-outline'} size={13} color="#FF6B35" />
-                  <Text style={styles.chipText}> {detailPost?.visibility === 'private' ? 'Private' : 'Public'}</Text>
-                </View>
-                {detailPost?.max_slots && (
-                  <View style={styles.chip}>
-                    <Icon name="person-add-outline" size={13} color="#FF6B35" />
-                    <Text style={styles.chipText}> {detailPost?.current_slots ?? 0}/{detailPost?.max_slots} slots</Text>
+              {/* Overview card */}
+              <View style={styles.detailCard}>
+                <Text style={styles.detailCardTitle}>Overview</Text>
+                <View style={styles.detailInfoGrid}>
+                  <View style={styles.detailInfoItem}>
+                    <View style={[styles.detailInfoIcon, {backgroundColor: '#FFF3EE'}]}>
+                      <Icon name={detailPost?.session_type === 'offline' ? 'location-outline' : 'videocam-outline'} size={18} color="#FF6B35" />
+                    </View>
+                    <Text style={styles.detailInfoLabel}>Session</Text>
+                    <Text style={styles.detailInfoValue}>{detailPost?.session_type === 'offline' ? 'Offline' : 'Online'}</Text>
                   </View>
-                )}
-                <View style={styles.chip}>
-                  <Icon name="cash-outline" size={13} color="#FF6B35" />
-                  <Text style={styles.chipText}> {formatPrice(detailPost?.price ?? 0)}/mo</Text>
+                  <View style={styles.detailInfoItem}>
+                    <View style={[styles.detailInfoIcon, {backgroundColor: '#E8F0FE'}]}>
+                      <Icon name={detailPost?.visibility === 'private' ? 'lock-closed-outline' : 'people-outline'} size={18} color="#4285F4" />
+                    </View>
+                    <Text style={styles.detailInfoLabel}>Visibility</Text>
+                    <Text style={styles.detailInfoValue}>{detailPost?.visibility === 'private' ? 'Private' : 'Public'}</Text>
+                  </View>
+                  <View style={styles.detailInfoItem}>
+                    <View style={[styles.detailInfoIcon, {backgroundColor: '#E8F5E9'}]}>
+                      <Icon name="cash-outline" size={18} color="#34C759" />
+                    </View>
+                    <Text style={styles.detailInfoLabel}>Price</Text>
+                    <Text style={styles.detailInfoValue}>{formatPrice(detailPost?.price ?? 0)}/mo</Text>
+                  </View>
+                  {detailPost?.max_slots ? (
+                    <View style={styles.detailInfoItem}>
+                      <View style={[styles.detailInfoIcon, {backgroundColor: '#F3E8FD'}]}>
+                        <Icon name="people" size={18} color="#9C27B0" />
+                      </View>
+                      <Text style={styles.detailInfoLabel}>Slots</Text>
+                      <Text style={styles.detailInfoValue}>{detailPost?.current_slots ?? 0}/{detailPost?.max_slots}</Text>
+                    </View>
+                  ) : (
+                    <View style={styles.detailInfoItem}>
+                      <View style={[styles.detailInfoIcon, {backgroundColor: '#F3E8FD'}]}>
+                        <Icon name="infinite-outline" size={18} color="#9C27B0" />
+                      </View>
+                      <Text style={styles.detailInfoLabel}>Slots</Text>
+                      <Text style={styles.detailInfoValue}>Unlimited</Text>
+                    </View>
+                  )}
                 </View>
               </View>
 
-              {/* Location (offline) */}
+              {/* Location card (offline) */}
               {detailPost?.session_type === 'offline' && !!detailPost?.location && (
                 <TouchableOpacity
-                  style={styles.detailRow}
+                  style={styles.detailCard}
                   onPress={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(detailPost.location)}`)}>
-                  <Icon name="location-outline" size={16} color="#FF3B30" />
-                  <Text style={[styles.detailRowText, {color: '#FF3B30', textDecorationLine: 'underline'}]}> {detailPost.location}</Text>
+                  <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+                    <View style={[styles.detailInfoIcon, {backgroundColor: '#FFEBEE'}]}>
+                      <Icon name="location" size={18} color="#FF3B30" />
+                    </View>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.detailInfoLabel}>Location</Text>
+                      <Text style={[styles.detailInfoValue, {color: '#FF3B30', textDecorationLine: 'underline'}]}>{detailPost.location}</Text>
+                    </View>
+                    <Icon name="open-outline" size={16} color="#FF3B30" />
+                  </View>
                 </TouchableOpacity>
               )}
 
-              {/* Enrollment / Program dates */}
+              {/* Schedule card */}
               {detailPost?.visibility === 'public' && (detailPost?.enrollment_deadline || detailPost?.program_start_date) && (
-                <View style={styles.detailRow}>
-                  <Icon name="calendar-outline" size={16} color="#888" />
-                  <Text style={styles.detailRowText}>
-                    {detailPost?.enrollment_deadline ? ` Enrollment closes ${formatDate(detailPost.enrollment_deadline)}` : ''}
-                    {detailPost?.enrollment_deadline && detailPost?.program_start_date ? '  ·' : ''}
-                    {detailPost?.program_start_date ? ` Starts ${formatDate(detailPost.program_start_date)}` : ''}
-                  </Text>
+                <View style={styles.detailCard}>
+                  <Text style={styles.detailCardTitle}>Enrollment</Text>
+                  <View style={styles.detailTimelineRow}>
+                    <View style={styles.detailTimelineDot} />
+                    <View style={styles.detailTimelineLine} />
+                    <View style={styles.detailTimelineDot} />
+                  </View>
+                  <View style={styles.detailTimelineLabels}>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.detailTimelineDate}>{detailPost?.enrollment_deadline ? formatDate(detailPost.enrollment_deadline) : '—'}</Text>
+                      <Text style={styles.detailTimelineDesc}>Enrollment closes</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                      <Text style={styles.detailTimelineDate}>{detailPost?.program_start_date ? formatDate(detailPost.program_start_date) : '—'}</Text>
+                      <Text style={styles.detailTimelineDesc}>Program starts</Text>
+                    </View>
+                  </View>
                 </View>
               )}
 
-              {/* Description */}
+              {/* Description card */}
               {!!detailPost?.description && (
-                <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Description</Text>
+                <View style={styles.detailCard}>
+                  <View style={styles.detailCardHeader}>
+                    <Icon name="document-text-outline" size={16} color="#FF6B35" />
+                    <Text style={styles.detailCardTitle}>Description</Text>
+                  </View>
                   <Text style={styles.detailBody}>{detailPost.description}</Text>
                 </View>
               )}
 
-              {/* Focus Areas */}
+              {/* Focus Areas card */}
               {!!detailPost?.focus_areas && (
-                <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Focus Areas</Text>
-                  <Text style={styles.detailBody}>{detailPost.focus_areas}</Text>
+                <View style={styles.detailCard}>
+                  <View style={styles.detailCardHeader}>
+                    <Icon name="fitness-outline" size={16} color="#FF6B35" />
+                    <Text style={styles.detailCardTitle}>Focus Areas</Text>
+                  </View>
+                  <View style={styles.detailTagsWrap}>
+                    {detailPost.focus_areas.split(',').map((area: string, i: number) => (
+                      <View key={i} style={styles.detailTag}>
+                        <Text style={styles.detailTagText}>{area.trim()}</Text>
+                      </View>
+                    ))}
+                  </View>
                 </View>
               )}
 
-              {/* Services */}
+              {/* Services card */}
               {!!detailPost?.services && (
-                <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Services</Text>
-                  <Text style={styles.detailBody}>{detailPost.services}</Text>
+                <View style={styles.detailCard}>
+                  <View style={styles.detailCardHeader}>
+                    <Icon name="list-outline" size={16} color="#FF6B35" />
+                    <Text style={styles.detailCardTitle}>Services</Text>
+                  </View>
+                  <View style={styles.detailTagsWrap}>
+                    {detailPost.services.split(',').map((svc: string, i: number) => (
+                      <View key={i} style={[styles.detailTag, {backgroundColor: '#E8F0FE', borderColor: '#C2D7FC'}]}>
+                        <Text style={[styles.detailTagText, {color: '#4285F4'}]}>{svc.trim()}</Text>
+                      </View>
+                    ))}
+                  </View>
                 </View>
               )}
 
-              {/* Schedule */}
+              {/* Weekly Schedule card */}
               {Array.isArray(detailPost?.schedule) && detailPost.schedule.length > 0 && (
-                <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Schedule</Text>
+                <View style={styles.detailCard}>
+                  <View style={styles.detailCardHeader}>
+                    <Icon name="time-outline" size={16} color="#FF6B35" />
+                    <Text style={styles.detailCardTitle}>Weekly Schedule</Text>
+                  </View>
                   {detailPost.schedule.map((s: any, i: number) => (
-                    <View key={i} style={styles.scheduleRow}>
-                      <Icon name="time-outline" size={14} color="#FF6B35" />
-                      <Text style={styles.scheduleText}> {s.day}  {s.start} – {s.end}</Text>
+                    <View key={i} style={[styles.detailScheduleRow, i % 2 === 0 && styles.detailScheduleRowAlt]}>
+                      <Text style={styles.detailScheduleDay}>{s.day}</Text>
+                      <View style={styles.detailScheduleTime}>
+                        <Icon name="time-outline" size={12} color="#FF6B35" />
+                        <Text style={styles.detailScheduleTimeText}>{s.start} – {s.end}</Text>
+                      </View>
                     </View>
                   ))}
                 </View>
               )}
 
-              {/* Reviews */}
-              <View style={styles.detailSection}>
-                <Text style={styles.detailSectionTitle}>Reviews ({detailPost?.review_count ?? 0})</Text>
+              {/* Reviews card */}
+              <View style={styles.detailCard}>
+                <View style={styles.detailCardHeader}>
+                  <Icon name="star-outline" size={16} color="#FF6B35" />
+                  <Text style={styles.detailCardTitle}>Reviews ({detailPost?.review_count ?? 0})</Text>
+                </View>
                 {reviewsLoading
                   ? <ActivityIndicator color="#FF6B35" style={{marginTop: 10}} />
                   : reviews.length === 0
@@ -314,16 +385,24 @@ export default function AdminTrainerPostsScreen() {
                     : reviews.map((r: any) => (
                         <View key={r.id} style={styles.reviewItem}>
                           <View style={styles.reviewHeader}>
-                            <Text style={styles.reviewMember}>{r.member_name}</Text>
-                            <View style={{flexDirection: 'row'}}>
-                              {[1,2,3,4,5].map(s => (
-                                <Icon key={s} name={s <= r.rating ? 'star' : 'star-outline'} size={12} color="#FFD700" />
-                              ))}
+                            <View style={styles.reviewAvatarPlaceholder}>
+                              <Text style={styles.reviewAvatarInitial}>{r.member_name?.charAt(0)}</Text>
+                            </View>
+                            <View style={{flex: 1}}>
+                              <Text style={styles.reviewMember}>{r.member_name}</Text>
+                              <View style={{flexDirection: 'row', gap: 1, marginTop: 2}}>
+                                {[1,2,3,4,5].map(s => (
+                                  <Icon key={s} name={s <= r.rating ? 'star' : 'star-outline'} size={11} color="#FFD700" />
+                                ))}
+                              </View>
                             </View>
                             <Text style={styles.reviewDate}>{new Date(r.created_at).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})}</Text>
                           </View>
                           {!!r.review && <Text style={styles.reviewText}>{r.review}</Text>}
-                          <Text style={styles.reviewSessions}>{r.sessions_attended}/{r.sessions_total} sessions attended</Text>
+                          <View style={styles.reviewSessionsBadge}>
+                            <Icon name="checkmark-done-outline" size={11} color="#34C759" />
+                            <Text style={styles.reviewSessions}>{r.sessions_attended}/{r.sessions_total} sessions attended</Text>
+                          </View>
                         </View>
                       ))
                 }
